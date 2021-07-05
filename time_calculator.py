@@ -1,6 +1,10 @@
 def add_time(start, duration, day =""):
   #split into time and pm/am 
   new_time=0
+  next_day = False
+  next_day_counter = 0
+
+  #Get time and duration from input string
   time, pm_am = start.split(" ")
   start_hour, start_minutes = time.split(":")
   duration_hours, duration_minutes = duration.split(":")
@@ -22,7 +26,11 @@ def add_time(start, duration, day =""):
       new_hour = new_hour + 1
     while(new_hour >= 12):
       new_hour = new_hour - 12
-      pm_am = "AM"
+      if(pm_am == "PM"):
+        pm_am = "AM"
+      else:
+        pm_am= "PM"
+
     '''print(new_hour)
     print(new_minutes)
     print(pm_am + "\n")'''
@@ -40,7 +48,7 @@ def add_time(start, duration, day =""):
   #rewrite 0 AM/PM to 12AM/PM
   if(new_hour == 0):
     new_hour = 12
-    
+
   '''
   print(new_hour)
   print(new_minutes)
@@ -59,5 +67,9 @@ def add_time(start, duration, day =""):
 
   elif(len(str(new_hour))==2 and len(str(new_minutes))==2):
     new_time = str(new_hour) + ":" + str(new_minutes) + " " + pm_am
+
+  #Add weekday to output if specified
+  if(day != ""):
+    new_time += ", " + day
 
   return new_time
