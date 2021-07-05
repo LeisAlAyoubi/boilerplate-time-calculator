@@ -1,5 +1,6 @@
 def add_time(start, duration, day =""):
   #split into time and pm/am 
+  new_time=0
   time, pm_am = start.split(" ")
   start_hour, start_minutes = time.split(":")
   duration_hours, duration_minutes = duration.split(":")
@@ -35,15 +36,28 @@ def add_time(start, duration, day =""):
     while(new_hour >= 12):
       new_hour = new_hour - 12
       pm_am = "PM"
-    '''print(new_hour)
-    print(new_minutes)
-    print(pm_am + "\n")'''
+
+  #rewrite 0 AM/PM to 12AM/PM
+  if(new_hour == 0):
+    new_hour = 12
+    
+  '''
+  print(new_hour)
+  print(new_minutes)
+  print(pm_am + "\n")
+  '''
 
   #formating the output time
   if(len(str(new_hour))<2 and len(str(new_minutes))==2):
     new_time = "0" + str(new_hour) + ":" + str(new_minutes) + " " + pm_am
-    return new_time
-
+    
   elif(len(str(new_hour))<2 and len(str(new_minutes))<2):
     new_time = "0" + str(new_hour) + ":" + "0" + str(new_minutes) + " " + pm_am
-    return new_time
+  
+  elif(len(str(new_hour))==2 and len(str(new_minutes))<2):
+    new_time = str(new_hour) + ":" + "0" + str(new_minutes) + " " + pm_am
+
+  elif(len(str(new_hour))==2 and len(str(new_minutes))==2):
+    new_time = str(new_hour) + ":" + str(new_minutes) + " " + pm_am
+
+  return new_time
