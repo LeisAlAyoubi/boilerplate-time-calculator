@@ -12,12 +12,7 @@ def add_time(start, duration, day =""):
   start_hour = start_hour.strip()
   start_minutes = start_minutes.strip()
 
-  '''print(start_hour)
-  print(start_minutes)
-  print(duration_hours)
-  print(duration_minutes)
-  print(pm_am + "\n")'''
-
+ 
   if(pm_am == "PM"):
     new_minutes = int(start_minutes) + int(duration_minutes)
     new_hour = int(start_hour) + int(duration_hours)
@@ -28,12 +23,10 @@ def add_time(start, duration, day =""):
       new_hour = new_hour - 12
       if(pm_am == "PM"):
         pm_am = "AM"
+        next_day = True
+        next_day_counter+=1
       else:
         pm_am= "PM"
-
-    '''print(new_hour)
-    print(new_minutes)
-    print(pm_am + "\n")'''
 
   elif(pm_am == "AM"):
     new_minutes = int(start_minutes) + int(duration_minutes)
@@ -49,12 +42,6 @@ def add_time(start, duration, day =""):
   if(new_hour == 0):
     new_hour = 12
 
-  '''
-  print(new_hour)
-  print(new_minutes)
-  print(pm_am + "\n")
-  '''
-
   #formating the output time
   if(len(str(new_hour))<2 and len(str(new_minutes))==2):
     new_time = "0" + str(new_hour) + ":" + str(new_minutes) + " " + pm_am
@@ -68,8 +55,18 @@ def add_time(start, duration, day =""):
   elif(len(str(new_hour))==2 and len(str(new_minutes))==2):
     new_time = str(new_hour) + ":" + str(new_minutes) + " " + pm_am
 
-  #Add weekday to output if specified
+  #Add weekday to output if specified and number of days later
   if(day != ""):
     new_time += ", " + day
+  elif(day != "" and next_day ==True and next_day_counter != 1):
+    new_time += ", " + day +"(" + next_day_counter + " days later)"
+  elif(day != "" and next_day ==True and next_day_counter == 1):
+    new_time += ", " + day +"(next day)"
+  elif(next_day ==True and next_day_counter != 1):
+    new_time += " (" + str(next_day_counter) + " days later)"
+  elif(next_day ==True and next_day_counter == 1):
+    new_time +=" (next day)"
+
+
 
   return new_time
