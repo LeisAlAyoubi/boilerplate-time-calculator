@@ -37,7 +37,12 @@ def add_time(start, duration, day =""):
       new_hour = new_hour + 1
     while(new_hour >= 12):
       new_hour = new_hour - 12
-      pm_am = "PM"
+      if(pm_am == "PM"):
+        pm_am = "AM"
+        next_day = True
+        next_day_counter+=1
+      else:
+        pm_am= "PM"
 
   #rewrite 0 AM/PM to 12AM/PM
   if(new_hour == 0):
@@ -63,10 +68,10 @@ def add_time(start, duration, day =""):
 
   #formating the output time
   if(len(str(new_hour))<2 and len(str(new_minutes))==2):
-    new_time = "0" + str(new_hour) + ":" + str(new_minutes) + " " + pm_am
+    new_time = str(new_hour) + ":" + str(new_minutes) + " " + pm_am
     
   elif(len(str(new_hour))<2 and len(str(new_minutes))<2):
-    new_time = "0" + str(new_hour) + ":" + "0" + str(new_minutes) + " " + pm_am
+    new_time = str(new_hour) + ":" + "0" + str(new_minutes) + " " + pm_am
   
   elif(len(str(new_hour))==2 and len(str(new_minutes))<2):
     new_time = str(new_hour) + ":" + "0" + str(new_minutes) + " " + pm_am
@@ -74,13 +79,17 @@ def add_time(start, duration, day =""):
   elif(len(str(new_hour))==2 and len(str(new_minutes))==2):
     new_time = str(new_hour) + ":" + str(new_minutes) + " " + pm_am
 
+  #print(next_weekday, next_day_counter)
+
+  next_weekday = next_weekday.capitalize()
+
   #Add weekday to output if specified and number of days later
-  if(day != ""):
+  if(day != "" and next_weekday == ""):
     new_time += ", " + day
   elif(next_weekday != "" and next_day == True and next_day_counter != 1):
-    new_time += ", " + next_weekday +"(" + next_day_counter + " days later)"
+    new_time += ", " + next_weekday + " (" + str(next_day_counter) + " days later)"
   elif(next_weekday != "" and next_day == True and next_day_counter == 1):
-    new_time += ", " + next_weekday +"(next day)"
+    new_time += ", " + next_weekday +" (next day)"
   elif(next_day == True and next_day_counter != 1):
     new_time += " (" + str(next_day_counter) + " days later)"
   elif(next_day ==True and next_day_counter == 1):
